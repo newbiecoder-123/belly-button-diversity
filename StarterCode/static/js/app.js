@@ -32,7 +32,7 @@ function makeCharts(data) {
         var data = [trace];
     
         // Create a variable for layout and format the layout
-        var layout = {
+        var layout_bar = {
             title: "Top 10 OTU",
             yaxis:{
                 tickmode:"linear",
@@ -44,7 +44,7 @@ function makeCharts(data) {
                 b: 30
             }
         };
-    Plotly.newPlot("bar", data, layout);
+    Plotly.newPlot("bar", data, layout_bar);
         
         // The bubble chart
         var trace1 = {
@@ -59,17 +59,17 @@ function makeCharts(data) {
             };
     
         // set the layout for the bubble plot
-        var layout2 = {
+        var layout_bubble = {
             xaxis:{title: "OTU ID"},
             height: 600,
             width: 1000
         };
     
-            // creating data variable 
-            var data1 = [trace1];
+        // Create a variable for an array of objects to plot
+        var data1 = [trace1];
     
     // create the bubble plot
-    Plotly.newPlot("bubble", data1, layout2);  
+    Plotly.newPlot("bubble", data1, layout_bubble);  
     });
 }  
 
@@ -80,15 +80,15 @@ function grabData(id) {
         var metadata = data.metadata;
     
         // Filter metadata by id and select demographic panel to place this data
-        var result = metadata.filter(meta => meta.id.toString() === id)[0];
-        var demographicInfo = d3.select("#sample-metadata");
+        var data_id = metadata.filter(meta => meta.id.toString() === id)[0];
+        var demoInfo = d3.select("#sample-metadata");
             
         // Empty the demographic info panel with each new selection 
-        demographicInfo.html("");
+        demoInfo.html("");
             
         // Use Object.entries to grab all the information for the demographic table
-            Object.entries(result).forEach((key) => {   
-                demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
+            Object.entries(data_id).forEach((key) => {   
+                demoInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
             });
         });
     }
